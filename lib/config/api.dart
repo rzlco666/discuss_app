@@ -5,5 +5,7 @@ class Api {
   static const String topic = '$_baseUrl/topic';
   static const String user = '$_baseUrl/user';
 
-  static const String imageUser = '$_baseUrl/image';
+  static const String imageComment = '$_baseUrl/image/comment';
+  static const String imageTopic = '$_baseUrl/image/topic';
+  static const String imageUser = '$_baseUrl/image/user';
 }
