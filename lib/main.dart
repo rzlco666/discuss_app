@@ -3,6 +3,8 @@ import 'package:discuss_app/config/app_route.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // to ensure that the binding is initialized
   runApp(const MyApp());
 }
 
