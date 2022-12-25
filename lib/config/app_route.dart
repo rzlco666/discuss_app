@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:discuss_app/config/session.dart';
 import 'package:discuss_app/page/error_page.dart';
 import 'package:go_router/go_router.dart';
