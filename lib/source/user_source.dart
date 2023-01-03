@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:d_method/d_method.dart';
 import 'package:discuss_app/config/api.dart';
+import 'package:discuss_app/model/user.dart';
 import 'package:http/http.dart';
 
 class UserSource {
@@ -88,6 +89,31 @@ class UserSource {
         'follower': 0.0,
         'following': 0.0,
       };
+    }
+  }
+
+  static Future<List<User>> search(String query) async {
+    String url = '${Api.user}/search.php';
+    try {
+      Response response = await Client().post(
+        Uri.parse(url),
+        body: {
+          'search_query': query,
+        },
+      );
+      DMethod.printTitle('User Source - search', response.body);
+      Map responseBody = jsonDecode(response.body);
+      if (responseBody['success']) {
+        List list = responseBody['data'];
+        return list.map((e) {
+          Map<String, dynamic> item = Map<String, dynamic>.from(e);
+          return User.fromJson(item);
+        }).toList();
+      }
+      return [];
+    } catch (e) {
+      DMethod.printTitle('User Source - search', e.toString());
+      return [];
     }
   }
 }
