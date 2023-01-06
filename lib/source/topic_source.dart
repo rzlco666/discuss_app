@@ -57,4 +57,26 @@ class TopicSource {
       return false;
     }
   }
+
+  static Future<bool> delete(
+      String id,
+      String images,
+      ) async {
+    String url = '${Api.topic}/delete.php';
+    try {
+      Response response = await Client().post(
+        Uri.parse(url),
+        body: {
+          'id': id,
+          'images': images
+        },
+      );
+      DMethod.printTitle('Topic Source - delete', response.body);
+      Map responseBody = jsonDecode(response.body);
+      return responseBody['success'];
+    } catch (e) {
+      DMethod.printTitle('Topic Source - delete', e.toString());
+      return false;
+    }
+  }
 }
