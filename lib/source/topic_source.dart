@@ -122,4 +122,26 @@ class TopicSource {
       return [];
     }
   }
+
+  static Future<List<Topic>> readWhereIdUser(String idUser) async {
+    String url = '${Api.topic}/read_where_id_user.php';
+    try {
+      Response response = await Client().post(Uri.parse(url), body: {
+        'id_user': idUser,
+      });
+      DMethod.printTitle('Topic Source - readWhereIdUser', response.body);
+      Map responseBody = jsonDecode(response.body);
+      if (responseBody['success']) {
+        List list = responseBody['data'];
+        return list.map((e) {
+          Map<String, dynamic> item = Map<String, dynamic>.from(e);
+          return Topic.fromJson(item);
+        }).toList();
+      }
+      return [];
+    } catch (e) {
+      DMethod.printTitle('Topic Source - readWhereIdUser', e.toString());
+      return [];
+    }
+  }
 }
