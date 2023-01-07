@@ -144,4 +144,26 @@ class TopicSource {
       return [];
     }
   }
+
+  static Future<List<Topic>> search(String query) async {
+    String url = '${Api.topic}/search.php';
+    try {
+      Response response = await Client().post(Uri.parse(url), body: {
+        'search_query': query,
+      });
+      DMethod.printTitle('Topic Source - search', response.body);
+      Map responseBody = jsonDecode(response.body);
+      if (responseBody['success']) {
+        List list = responseBody['data'];
+        return list.map((e) {
+          Map<String, dynamic> item = Map<String, dynamic>.from(e);
+          return Topic.fromJson(item);
+        }).toList();
+      }
+      return [];
+    } catch (e) {
+      DMethod.printTitle('Topic Source - search', e.toString());
+      return [];
+    }
+  }
 }
