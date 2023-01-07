@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:d_method/d_method.dart';
+import 'package:discuss_app/model/topic.dart';
 import 'package:http/http.dart';
 
 import '../config/api.dart';
@@ -77,6 +78,26 @@ class TopicSource {
     } catch (e) {
       DMethod.printTitle('Topic Source - delete', e.toString());
       return false;
+    }
+  }
+
+  static Future<List<Topic>> readExplore() async {
+    String url = '${Api.topic}/read_explore.php';
+    try {
+      Response response = await Client().get(Uri.parse(url));
+      DMethod.printTitle('Topic Source - readExplore', response.body);
+      Map responseBody = jsonDecode(response.body);
+      if (responseBody['success']) {
+        List list = responseBody['data'];
+        return list.map((e) {
+          Map<String, dynamic> item = Map<String, dynamic>.from(e);
+          return Topic.fromJson(item);
+        }).toList();
+      }
+      return [];
+    } catch (e) {
+      DMethod.printTitle('Topic Source - readExplore', e.toString());
+      return [];
     }
   }
 }
