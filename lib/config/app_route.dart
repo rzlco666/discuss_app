@@ -1,6 +1,7 @@
 import 'package:discuss_app/config/session.dart';
 import 'package:discuss_app/controller/c_add_topic.dart';
 import 'package:discuss_app/controller/c_follower.dart';
+import 'package:discuss_app/controller/c_following.dart';
 import 'package:discuss_app/controller/c_profile.dart';
 import 'package:discuss_app/controller/c_search.dart';
 import 'package:discuss_app/page/error_page.dart';
@@ -21,6 +22,7 @@ class AppRoute {
   static const profile = '/profile';
   static const search = '/search';
   static const follower = '/follower';
+  static const following = '/following';
 
   static GoRouter routerConfig = GoRouter(
       errorBuilder: (context, state) => ErrorPage(
@@ -80,6 +82,13 @@ class AppRoute {
           path: follower,
           builder: (context, state) => ChangeNotifierProvider(
               create: (_) => CFollower(),
+              child: const Scaffold()
+          ),
+        ),
+        GoRoute(
+          path: following,
+          builder: (context, state) => ChangeNotifierProvider(
+              create: (_) => CFollowing(),
               child: const Scaffold()
           ),
         ),
