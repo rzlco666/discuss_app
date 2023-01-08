@@ -1,6 +1,8 @@
 import 'package:discuss_app/config/app_color.dart';
 import 'package:discuss_app/config/app_route.dart';
+import 'package:discuss_app/controller/c_explore.dart';
 import 'package:discuss_app/controller/c_feed.dart';
+import 'package:discuss_app/controller/c_my_topic.dart';
 import 'package:discuss_app/controller/c_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CUser()),
         ChangeNotifierProvider(create: (_) => CHome()),
         ChangeNotifierProvider(create: (_) => CFeed()),
+        ChangeNotifierProvider(create: (_) => CExplore()),
+        ChangeNotifierProvider(create: (_) => CMyTopic()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false, // to remove debug banner
