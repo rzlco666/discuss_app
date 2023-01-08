@@ -1,5 +1,6 @@
 import 'package:discuss_app/config/app_color.dart';
 import 'package:discuss_app/config/app_route.dart';
+import 'package:discuss_app/controller/c_account.dart';
 import 'package:discuss_app/controller/c_explore.dart';
 import 'package:discuss_app/controller/c_feed.dart';
 import 'package:discuss_app/controller/c_my_topic.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CFeed()),
         ChangeNotifierProvider(create: (_) => CExplore()),
         ChangeNotifierProvider(create: (_) => CMyTopic()),
+        ChangeNotifierProvider(create: (_) => CAccount()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false, // to remove debug banner
