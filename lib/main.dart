@@ -4,6 +4,8 @@ import 'package:discuss_app/controller/c_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'controller/c_home.dart';
+
 void main() {
   WidgetsFlutterBinding
       .ensureInitialized(); // to ensure that the binding is initialized
@@ -18,7 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => CUser())
+        ChangeNotifierProvider(create: (_) => CUser()),
+        ChangeNotifierProvider(create: (_) => CHome()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false, // to remove debug banner
