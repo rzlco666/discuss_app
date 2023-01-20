@@ -57,7 +57,7 @@ class AppRoute {
         ),
         GoRoute(
           path: register,
-          builder: (context, state) => const RegisterPage(),
+          builder: (context, state) => RegisterPage(),
         ),
         GoRoute(
           path: addTopic,

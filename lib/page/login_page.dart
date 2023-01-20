@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
 
         DInfo.dialogSuccess(context, 'Sign In Success');
         DInfo.closeDialog(context, actionAfterClose: () {
-          //context.go(AppRoute.home);
+          context.go(AppRoute.home);
         });
       }else{
         DInfo.snackBarError(context, 'Sign In Failed');
