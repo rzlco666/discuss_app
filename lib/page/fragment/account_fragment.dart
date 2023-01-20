@@ -1,16 +1,68 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:d_info/d_info.dart';
 import 'package:d_view/d_view.dart';
 import 'package:discuss_app/config/api.dart';
 import 'package:discuss_app/config/app_format.dart';
+import 'package:discuss_app/config/app_route.dart';
+import 'package:discuss_app/config/session.dart';
 import 'package:discuss_app/controller/c_account.dart';
+import 'package:discuss_app/controller/c_home.dart';
 import 'package:discuss_app/controller/c_user.dart';
+import 'package:discuss_app/source/user_source.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
+import '../../model/user.dart';
 
 class AccountFragment extends StatelessWidget {
   const AccountFragment({super.key});
 
-  logout(BuildContext context) {}
+  logout(BuildContext context) {
+    DInfo.dialogConfirmation(context, 'Logout', 'Are you sure to logout?')
+        .then((yes) {
+          if (yes??false) {
+           Session.clearUser().then((success) {
+            if (success) {
+              context.read<CUser>().data=null;
+              context.read<CHome>().indexMenu=0;
+              context.go(AppRoute.login);
+            }
+           });
+          }
+    });
+  }
+
+  updateImage(BuildContext context) {
+    ImagePicker().pickImage(source: ImageSource.gallery).then((image) {
+      if (image != null) {
+        String idUser = context.read<CUser>().data!.id;
+        String oldImage = context.read<CUser>().data!.image;
+
+        DInfo.dialogConfirmation(context, 'Update', 'Are you sure to update?')
+            .then((yes) async {
+          if (yes??false) {
+            String name = image.name;
+            Uint8List bytes = await image.readAsBytes();
+            UserSource.updateImage(idUser, oldImage, name, base64Encode(bytes)).then((success) {
+              if (success) {
+                User? newUser = context.read<CUser>().data!..image = name;
+                context.read<CUser>().data = newUser;
+                Session.setUser(newUser);
+                DInfo.snackBarSuccess(context, 'Update image success');
+              }else {
+                DInfo.snackBarError(context, 'Failed to update image');
+              }
+            });
+          }
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +72,10 @@ class AccountFragment extends StatelessWidget {
     if (cUser.data == null) return DView.empty();
     cAccount.setStat(cUser.data!.id);
 
-    double widthBoxImage = MediaQuery.of(context).size.width * 0.5;
+    double widthBoxImage = MediaQuery
+        .of(context)
+        .size
+        .width * 0.5;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,7 +99,9 @@ class AccountFragment extends StatelessWidget {
                     color: Colors.white,
                     border: Border.all(
                       width: 4,
-                      color: Theme.of(context).primaryColor,
+                      color: Theme
+                          .of(context)
+                          .primaryColor,
                     ),
                     shape: BoxShape.circle,
                     boxShadow: [
@@ -63,11 +120,15 @@ class AccountFragment extends StatelessWidget {
                     borderRadius: BorderRadius.circular(90),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(90),
-                      child: Image.network(
-                        '${Api.imageUser}/${cUser.data!.image}',
-                        fit: BoxFit.cover,
-                        width: widthBoxImage - 20,
-                        height: widthBoxImage - 20,
+                      child: Consumer<CUser>(
+                        builder: (contextComsumerUser, _, child) {
+                          return Image.network(
+                            '${Api.imageUser}/${_.data!.image}',
+                            fit: BoxFit.cover,
+                            width: widthBoxImage - 20,
+                            height: widthBoxImage - 20,
+                          );
+                        }
                       ),
                     ),
                   ),
@@ -88,13 +149,13 @@ class AccountFragment extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               alignment: Alignment.center,
-              child: DView.textTitle(cUser.data!.username, color: Colors.white),
+              child: DView.textTitle(context.watch<CUser>().data!.username, color: Colors.white),
             ),
             DView.spaceWidth(),
             SizedBox(
               height: 30,
               child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () => updateImage(context),
                   icon: const Icon(Icons.edit, size: 14),
                   label: const Text('Image')),
             ),
