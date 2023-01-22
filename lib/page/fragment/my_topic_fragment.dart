@@ -1,8 +1,10 @@
+import 'package:d_info/d_info.dart';
 import 'package:d_view/d_view.dart';
 import 'package:discuss_app/config/app_route.dart';
 import 'package:discuss_app/controller/c_my_topic.dart';
 import 'package:discuss_app/controller/c_user.dart';
 import 'package:discuss_app/model/topic.dart';
+import 'package:discuss_app/source/topic_source.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +13,16 @@ import 'package:provider/provider.dart';
 class MyTopicFragment extends StatelessWidget {
   const MyTopicFragment({super.key});
 
-  deleteTopic(BuildContext context, Topic topic) {}
+  deleteTopic(BuildContext context, Topic topic) {
+    TopicSource.delete(topic.id, topic.images).then((success) {
+      if (success) {
+        context.read<CMyTopic>().setTopics(topic.idUser);
+        DInfo.snackBarSuccess(context, 'Delete topic success');
+      }else {
+        DInfo.snackBarError(context, 'Delete topic failed');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +71,7 @@ class MyTopicFragment extends StatelessWidget {
                               extra: topic..user = user);
                         }
                         if (value == 'delete') {
-                          //deleteTopic(context, topic);
+                          deleteTopic(context, topic);
                         }
                       },
                       itemBuilder: (context) => [
