@@ -8,7 +8,7 @@ import 'package:discuss_app/controller/c_search.dart';
 import 'package:discuss_app/model/topic.dart';
 import 'package:discuss_app/page/add_topic.dart';
 import 'package:discuss_app/page/error_page.dart';
-import 'package:discuss_app/page/fragment/detail_topic_page.dart';
+import 'package:discuss_app/page/detail_topic_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';

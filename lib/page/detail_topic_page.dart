@@ -8,7 +8,7 @@ import 'package:discuss_app/config/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../model/topic.dart';
+import '../model/topic.dart';
 
 class DetailTopicPage extends StatelessWidget {
   const DetailTopicPage({super.key, required this.topic});
