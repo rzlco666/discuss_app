@@ -1,7 +1,9 @@
 import 'package:d_view/d_view.dart';
+import 'package:discuss_app/config/app_route.dart';
 import 'package:discuss_app/controller/c_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'fragment/account_fragment.dart';
@@ -44,7 +46,7 @@ class HomePage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            _.indexMenu = 0;
+            context.push(AppRoute.addTopic);
           },
           mini: true,
           tooltip: 'Create New Topic',
