@@ -6,8 +6,10 @@ import 'package:discuss_app/config/app_color.dart';
 import 'package:discuss_app/controller/c_explore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../config/app_route.dart';
 import '../../controller/c_user.dart';
 import '../../model/topic.dart';
 import '../../widget/item_topic.dart';
@@ -33,7 +35,7 @@ class ExploreFragment extends StatelessWidget {
               DButtonElevation(
                 mainColor: AppColor.primary,
                 onClick: () {
-                  //context.push(AppRoute.search);
+                  context.push(AppRoute.search);
                 },
                 height: 36,
                 width: 36,
