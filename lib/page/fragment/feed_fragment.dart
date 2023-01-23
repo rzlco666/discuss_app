@@ -37,6 +37,7 @@ class FeedFragment extends StatelessWidget {
               );
             }
             return ListView.builder(
+              itemCount: _.topics.length,
               itemBuilder: (context, index) {
                 Topic topic = _.topics[index];
                 List images = jsonDecode(topic.images);
