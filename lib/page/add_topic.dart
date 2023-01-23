@@ -110,7 +110,7 @@ class AddTopic extends StatelessWidget {
                   itemCount: _.imageNames.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(index == 0 ? 16 : 8, 8, index == _.imageNames.length - 1 ? 16 : 8, 8),
                       child: AspectRatio(
                         aspectRatio: 16 / 9,
                         child: Container(
