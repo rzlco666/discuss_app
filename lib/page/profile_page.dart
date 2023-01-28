@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../config/app_format.dart';
+import '../model/topic.dart';
 import '../model/user.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -20,12 +21,13 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var cUser = context.read<CUser>();
     var cProfile = context.read<CProfile>();
-    cProfile.setTopics(cUser.data!.id);
+    cProfile.setTopics(user.id);
     cProfile.checkIsFollowing(cUser.data!.id, user.id);
-    cProfile.setStat(cUser.data!.id);
+    cProfile.setStat(user.id);
 
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AspectRatio(
             aspectRatio: 1.3,
@@ -142,12 +144,50 @@ class ProfilePage extends StatelessWidget {
                       onPressed: () {
                         cProfile.setFollow(context, cUser.data!.id, user.id);
                       },
-                      child: Text(_.isFollowing? 'Unfollow' : 'Follow'),
+                      child: Text(_.isFollowing ? 'Unfollow' : 'Follow'),
                     ),
                   ),
                 );
               },
             ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: DView.textTitle('Topic'),
+          ),
+          Expanded(child: Consumer<CProfile>(
+            builder: (contextConsumer, _, child) {
+              if (_.topics.isEmpty) return DView.empty();
+              return ListView.builder(
+                padding: const EdgeInsets.all(0),
+                itemCount: _.topics.length,
+                itemBuilder: (context, index) {
+                  Topic topic = _.topics[index];
+                  return ListTile(
+                    onTap: () {
+                      context.push(AppRoute.detailTopic,
+                          extra: topic..user = user);
+                    },
+                    leading: CircleAvatar(
+                      radius: 16,
+                      child: Text('${index + 1}'),
+                    ),
+                    horizontalTitleGap: 0,
+                    title: Text(
+                      topic.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: Text(
+                      topic.description,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: const Icon(Icons.navigate_next),
+                  );
+                },
+              );
+            },
+          ))
         ],
       ),
     );

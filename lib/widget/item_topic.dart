@@ -28,7 +28,7 @@ class ItemTopic extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    //context.push(AppRoute.profile, extra: topic.user);
+                    context.push(AppRoute.profile, extra: topic.user);
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
