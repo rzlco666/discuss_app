@@ -182,7 +182,14 @@ class AccountFragment extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       Expanded(
-                        child: itemStat('Follower', _.stat['follower']),
+                        child: GestureDetector(
+                          onTap: () {
+                            context.push(AppRoute.follower,
+                                extra: context.read<CUser>().data);
+                          },
+                          child: itemStat(
+                              'Follower', _.stat['follower']),
+                        ),
                       ),
                       Container(
                         width: 0.5,
@@ -190,7 +197,14 @@ class AccountFragment extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       Expanded(
-                        child: itemStat('Following', _.stat['following']),
+                        child: GestureDetector(
+                          onTap: () {
+                            context.push(AppRoute.following,
+                                extra: context.read<CUser>().data);
+                          },
+                          child: itemStat(
+                              'Following', _.stat['following']),
+                        ),
                       ),
                       Container(
                         width: 0.5,
