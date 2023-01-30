@@ -9,6 +9,8 @@ import 'package:discuss_app/model/topic.dart';
 import 'package:discuss_app/page/add_topic.dart';
 import 'package:discuss_app/page/detail_topic_page.dart';
 import 'package:discuss_app/page/error_page.dart';
+import 'package:discuss_app/page/follower_page.dart';
+import 'package:discuss_app/page/following_page.dart';
 import 'package:discuss_app/page/profile_page.dart';
 import 'package:discuss_app/page/search_page.dart';
 import 'package:discuss_app/page/update_topic_page.dart';
@@ -94,14 +96,14 @@ class AppRoute {
           path: follower,
           builder: (context, state) => ChangeNotifierProvider(
             create: (_) => CFollower(),
-            child: const Scaffold(),
+            child: FollowerPage(user: state.extra as User),
           ),
         ),
         GoRoute(
           path: following,
           builder: (context, state) => ChangeNotifierProvider(
             create: (_) => CFollowing(),
-            child: const Scaffold(),
+            child: FollowingPage(user: state.extra as User),
           ),
         ),
         GoRoute(
